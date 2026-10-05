@@ -1,0 +1,2 @@
+kivy>=2.3.0
+intellign-growth>=0.2.0
