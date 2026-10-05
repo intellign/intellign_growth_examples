@@ -1,0 +1,12 @@
+name: growth_example_flutter
+description: Runnable Intellign Growth Flutter example.
+publish_to: none
+version: 0.1.0
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  intellign_growth: ^0.2.0
+flutter:
+  uses-material-design: true
