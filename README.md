@@ -4,7 +4,13 @@
 
 Runnable examples for connecting websites, apps, stores, services, and custom products to Intellign Growth.
 
-Growth is not a website script. The web runtime, JavaScript SDK, Flutter SDK, Python SDK, and REST API all speak the same Growth event language and feed the same learning loop.
+Growth is not an analytics dashboard or a click logger. Every integration feeds the same learning loop:
+
+```text
+Signal → Learning → Observation → Investigation → Recommendation → Test → Result
+```
+
+The job of these examples is to send meaningful product/business evidence so Growth can learn responsibly.
 
 ## Pick your stack
 
@@ -17,23 +23,23 @@ Growth is not a website script. The web runtime, JavaScript SDK, Flutter SDK, Py
 | Python server | [`python/server`](python/server) | `ig_sk_live_...` server secret |
 | REST | [`rest`](rest) | `ig_sk_live_...` server secret |
 
-## The five-minute mental model
+## What a useful integration looks like
 
-A useful Growth integration follows the business journey instead of logging random clicks:
+Track the journey, not random UI noise:
 
 ```text
 product_view → add_to_cart → signup → purchase
 ```
 
-Use `identify()` when a person becomes known. Before that, Growth can learn from an anonymous identity.
+Use `identify()` when an anonymous person becomes known. Growth can learn before identification, then connect later behavior to the same journey.
 
-Every example in this repository is designed around the same tiny demo business so you can compare frameworks without relearning the product.
+Meaningful events give Growth evidence. Growth then decides whether there is enough evidence to observe a pattern, investigate it, recommend a reversible test, and learn from the result. A pattern is not treated as proof of causation.
 
 ## Credential safety
 
 - **Publishable keys (`ig_pk_...`)** belong in approved browser origins.
-- **Client keys (`ig_ck_...`)** are for distributed apps and are scoped to an application/bundle/package ID.
-- **Server keys (`ig_sk_...`) are secrets.** Never put one in browser JavaScript, Flutter, Kivy, a mobile binary, or a public repository.
+- **Client keys (`ig_ck_...`)** are for distributed apps and must be scoped to an application/bundle/package ID.
+- **Server keys (`ig_sk_...`) are secrets.** Never put one in browser JavaScript, Flutter, Kivy, a mobile binary, screenshots, logs, or a public repository.
 - `.env.example` files contain placeholders only. Never commit real credentials.
 
 ## Verify the connection
@@ -41,9 +47,18 @@ Every example in this repository is designed around the same tiny demo business 
 1. Create/select a project in Intellign Growth.
 2. Open **Connections** and choose your stack.
 3. Create or copy the credential Growth asks for.
-4. Run an example and perform an action.
+4. Run an example and perform a meaningful action.
 5. Return to Growth and choose **Verify connection**.
-6. Growth should only show **Connected ✓** after a real event reaches the project.
+6. Growth only shows **Connected** after a real event reaches the project.
+
+After verification, connection health reflects actual activity:
+
+- **Live now** — activity within the last hour.
+- **Seen today** — activity within the last day.
+- **Quiet** — no recent activity, but the connection has been seen.
+- **Needs attention** — the connection has gone stale.
+
+When fresh activity is arriving, Growth can show **Growth is learning**. That means evidence is accumulating; it does not mean Growth has already proven a cause or has a recommendation.
 
 ## Canonical event shape
 
@@ -52,11 +67,13 @@ Every example in this repository is designed around the same tiny demo business 
   "schemaVersion": 1,
   "event": "purchase",
   "anonymousId": "visitor_123",
+  "userId": "customer_123",
   "properties": {
     "product": "Studio Lamp",
-    "value": 79
+    "value": 79,
+    "currency": "USD"
   },
-  "timestamp": "2026-10-05T20:00:00Z"
+  "timestamp": "2026-10-06T20:00:00Z"
 }
 ```
 
@@ -64,10 +81,16 @@ The SDKs construct the transport envelope for you. Your job is to describe meani
 
 ## Event naming
 
-Prefer stable, human-readable names such as `product_view`, `add_to_cart`, `signup`, `checkout_started`, and `purchase`. Keep sensitive/private content out of event properties.
+Prefer stable names such as `product_view`, `add_to_cart`, `signup`, `checkout_started`, and `purchase`. Keep private/sensitive content out of event properties.
 
-## Status
+## SDK versions
 
-These examples target the Growth 42.x connection contract. Registry packages may be released independently; each example README distinguishes a registry install from a local/source fallback when appropriate.
+These examples are aligned to the current Growth connection contract.
+
+- JavaScript SDK: `@intellign/growth` 0.2.1
+- Flutter SDK: `intellign_growth` 0.2.1
+- Python SDK: `intellign-growth` 0.2.0
+
+The registries are released independently, so version numbers can differ while the event contract remains compatible.
 
 Made in New York by Intellign LLC.
