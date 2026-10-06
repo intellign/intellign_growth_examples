@@ -13,4 +13,8 @@ python main.py
 
 The application ID must match the one attached to the Growth client credential.
 
-> Registry note: this example targets `intellign-growth` 0.2.x. During registry release, install from the Growth SDK source until PyPI publication is complete.
+The demo sends `product_view → add_to_cart → signup → purchase` and identifies the demo customer at signup. Return to Growth after a real event arrives and verify the connection.
+
+Connection health is based on real signal recency, and fresh activity can place the project in **Growth is learning** while enough evidence accumulates for observations and recommendations.
+
+This example targets `intellign-growth` 0.2.0.
