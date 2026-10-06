@@ -10,6 +10,16 @@ npm run dev
 
 Put the publishable key from **Growth → Connections → JavaScript** in `.env`, and make sure the running origin is approved for that Growth project.
 
-The demo sends `product_view → add_to_cart → signup → purchase` and calls `identify()` when the demo customer signs up.
+The demo sends:
 
-> Registry note: this example targets `@intellign/growth` 0.2.x. If that version has not yet been published during the release process, use the SDK source from the Growth repository until registry publication is complete.
+```text
+product_view → add_to_cart → signup → purchase
+```
+
+It calls `identify()` at signup so Growth can connect anonymous behavior to the known customer journey.
+
+After the first real event reaches Growth, return to **Connections** and verify the integration. A successful connection can then move through health states such as **Live now**, **Seen today**, **Quiet**, and **Needs attention** based on actual signal recency.
+
+Fresh activity may show **Growth is learning**. That means Growth is accumulating evidence before it decides whether there is enough support for an observation or recommendation.
+
+This example targets `@intellign/growth` 0.2.1.
