@@ -7,6 +7,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intellign_growth: ^0.2.0
+  intellign_growth: ^0.2.1
 flutter:
   uses-material-design: true
